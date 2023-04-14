@@ -1,6 +1,11 @@
+// run `node index.js` in the terminal
+
 const redux = require("redux");
+const reduxlogger = require("redux-logger");
+const logger = reduxlogger.createLogger();
 const createStore = redux.legacy_createStore;
 const combineReducers = redux.combineReducers;
+const applyMiddleware = redux.applyMiddleware;
 
 const BUY_CAKE = "BUY_CAKE";
 const BUY_ICECREAM = "BUY_ICECREAM";
@@ -49,7 +54,7 @@ const rootReducer = combineReducers({
   iceCream: iceCreamReducer,
 });
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(logger));
 console.log(store.getState());
 const unsubscribe = store.subscribe(() =>
   console.log("Updated State ", store.getState())
